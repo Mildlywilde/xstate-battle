@@ -8,9 +8,9 @@ export const BattleHeader = () => {
   const state = useSelector(battleActor, (state) => state);
   const headerText = state.matches("playerTurn") ? "Your Turn" : "Enemy Turn";
   return (
-    <div>
+    <div className="flex">
       <StatusPanel character={state.context.player} />
-      <h1>{headerText}</h1>
+      <h1 className="w-96">{headerText}</h1>
       <StatusPanel character={state.context.enemy} />
     </div>
   );

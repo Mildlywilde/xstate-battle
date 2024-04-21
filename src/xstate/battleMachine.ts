@@ -82,10 +82,25 @@ export const battleMachine = setup({
         },
       ],
     },
+    // TODO: Can I reset back to the original input?
     playerWin: {
       on: {
         RESET: {
           target: "start",
+          actions: assign({
+            player: () => {
+              return {
+                name: "Player",
+                health: 100
+              }
+            },
+            enemy: () => {
+              return {
+                name: "Enemy",
+                health: 100
+              }
+            }
+          })
         },
       },
     },
@@ -93,6 +108,20 @@ export const battleMachine = setup({
       on: {
         RESET: {
           target: "start",
+          actions: assign({
+            player: () => {
+              return {
+                name: "Player",
+                health: 100
+              }
+            },
+            enemy: () => {
+              return {
+                name: "Enemy",
+                health: 50
+              }
+            }
+          })
         },
       },
     },
