@@ -5,8 +5,14 @@ import { StatusPanel } from './StatusPanel';
 export const Battle = () => {
   const [state, send] = useActor(battleMachine, { 
     input: {
-      playerHealth: 100,
-      enemyHealth: 50
+      player: {
+        name: "Player",
+        health: 100
+      },
+      enemy: {
+        name: "Enemy",
+        health: 50
+      }
     }
   });
 
@@ -59,8 +65,8 @@ export const Battle = () => {
         </div>
       )}
 
-      <StatusPanel name={"Player"} health={state.context.playerHealth}/>
-      <StatusPanel name={"Enemy"} health={state.context.enemyHealth}/>
+      <StatusPanel character={state.context.player}/>
+      <StatusPanel character={state.context.enemy}/>
     </div>
   );
 }

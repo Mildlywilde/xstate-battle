@@ -1,37 +1,34 @@
 import { assign, setup } from "xstate";
 
+export interface Character {
+    name: string
+    health: number
+}
+
 export interface BattleContext {
-    playerHealth: number;
-    enemyHealth: number;
+    player: Character
+    enemy: Character
+    // playerHealth: number;
+    // enemyHealth: number;
 }
 
 export const battleMachine = setup({
     types: {
-        input: {} as {
-            playerHealth: number;
-            enemyHealth: number;
-        },
-        context: {} as {
-            playerHealth: number;
-            enemyHealth: number;
-        },
+        input: {} as BattleContext,
+        context: {} as BattleContext,
         events: {} as 
             | { type: "BEGIN" }
             | { type: "ATTACK" }
             | { type: "CONFIRM"}
     },
-    actions: {
-        begin: () => {},
-        attack: () => {},
-    },
     guards: {
-        isPlayerDead: ({context}) => context.playerHealth <= 0,
-        isEnemyDead: ({context}) => context.enemyHealth <= 0
+        isPlayerDead: ({context}) => context.player.health <= 0,
+        isEnemyDead: ({context}) => context.enemy.health <= 0
     }
 }).createMachine({
     context: ({input}) => ({
-        playerHealth: input.playerHealth,
-        enemyHealth: input.enemyHealth
+        player: input.player,
+        enemy: input.enemy
     }),
     initial: "start",
     states: {
@@ -45,8 +42,10 @@ export const battleMachine = setup({
                 ATTACK:{
                     target: "playerEndStep",
                     actions: assign({
-                        enemyHealth: (event) => event.context.enemyHealth - Math.floor(Math.random() * 10)
-                        // enemyHealth: (event) => event.context.enemyHealth -20
+                        enemy: (event) => {
+                            const enemy = event.context.enemy
+                            return {...enemy, health: enemy.health - 10}
+                        }
                     }),
                 }
             }
@@ -67,7 +66,10 @@ export const battleMachine = setup({
                 CONFIRM: {
                     target: "enemyTurnInfo",
                     actions: assign({
-                        playerHealth: (event) => event.context.playerHealth - Math.floor(Math.random() * 10)
+                        player: (event) => {
+                            const player = event.context.player
+                            return {...player, health: player.health -10}
+                        }
                     }),
                 }
             }
