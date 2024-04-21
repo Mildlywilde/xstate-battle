@@ -1,9 +1,15 @@
-import { useMachine } from '@xstate/react';
+import { useMachine, useActor } from '@xstate/react';
 import {battleMachine} from '../xstate/battleMachine';
 import { StatusPanel } from './StatusPanel';
 
 export const Battle = () => {
-  const [state, send] = useMachine(battleMachine);
+  // Use an actor
+  const [state, send] = useActor(battleMachine, { 
+    input: {
+      playerHealth: 100,
+      enemyHealth: 50
+    }
+  });
 
   return (
     <div>
@@ -36,7 +42,7 @@ export const Battle = () => {
         </div>
       )}
 
-      {state.matches("endStep") && (
+      {state.matches("enemyEndStep") && (
         <div>
           <p>End of turn!</p>
           <button onClick={() => send({ type: "BEGIN" })}>Next turn</button>

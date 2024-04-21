@@ -7,6 +7,10 @@ export interface BattleContext {
 
 export const battleMachine = setup({
     types: {
+        input: {} as {
+            playerHealth: number;
+            enemyHealth: number;
+        },
         context: {} as {
             playerHealth: number;
             enemyHealth: number;
@@ -25,10 +29,10 @@ export const battleMachine = setup({
         isEnemyDead: ({context}) => context.enemyHealth <= 0
     }
 }).createMachine({
-    context: {
-        playerHealth: 100,
-        enemyHealth: 100,
-    },
+    context: ({input}) => ({
+        playerHealth: input.playerHealth,
+        enemyHealth: input.enemyHealth
+    }),
     initial: "start",
     states: {
         start: {
