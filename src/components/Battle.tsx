@@ -1,7 +1,8 @@
 import { useMachine } from '@xstate/react';
 import {battleMachine} from '../xstate/battleMachine';
+import { StatusPanel } from './StatusPanel';
 
-export default function Battle() {
+export const Battle = () => {
   const [state, send] = useMachine(battleMachine);
 
   return (
@@ -46,8 +47,8 @@ export default function Battle() {
         </div>
       )}
 
-      <p>Player Health: {state.context.playerHealth}</p>
-      <p>Enemy Health: {state.context.enemyHealth}</p>
+      <StatusPanel name={"Player"} health={state.context.playerHealth}/>
+      <StatusPanel name={"Enemy"} health={state.context.enemyHealth}/>
     </div>
   );
 }
