@@ -22,10 +22,17 @@ export const Battle = () => {
         </div>
       )}
 
-      {state.matches("enemyTurn") && (
+      {state.matches("enemyTurnAction") && (
         <div>
           <p>Enemy's turn!</p>
-          <button onClick={() => send({ type: "ATTACK" })}>Attack</button>
+          <button onClick={() => send({ type: "CONFIRM" })}>Confirm</button>
+        </div>
+      )}
+
+      {state.matches("enemyTurnInfo") && (
+        <div>
+          <p>Enemy Attacked!</p>
+          <button onClick={() => send({ type: "CONFIRM" })}>Confirm</button>
         </div>
       )}
 

@@ -14,6 +14,7 @@ export const battleMachine = setup({
         events: {} as 
             | { type: "BEGIN" }
             | { type: "ATTACK" }
+            | { type: "CONFIRM"}
     },
     actions: {
         begin: () => {},
@@ -37,21 +38,40 @@ export const battleMachine = setup({
         },
         playerTurn: {
             on: {
-                ATTACK: {
-                    target: "enemyTurn",
+                ATTACK:{
+                    target: "playerEndStep",
                     actions: assign({
                         enemyHealth: (event) => event.context.enemyHealth - Math.floor(Math.random() * 10)
+                        // enemyHealth: (event) => event.context.enemyHealth -20
                     }),
                 }
             }
         },
-        enemyTurn: {
+        playerEndStep: {
+            always: [
+                {
+                    target: "playerWin",
+                    guard: "isEnemyDead"
+                },
+                {
+                    target: "enemyTurnAction"
+                }
+            ]
+        },
+        enemyTurnAction: {
             on: {
-                ATTACK: {
-                    target: "endStep",
+                CONFIRM: {
+                    target: "enemyTurnInfo",
                     actions: assign({
                         playerHealth: (event) => event.context.playerHealth - Math.floor(Math.random() * 10)
                     }),
+                }
+            }
+        },
+        enemyTurnInfo: {
+            on: {
+                CONFIRM: {
+                    target: "endStep",
                 }
             }
         },
