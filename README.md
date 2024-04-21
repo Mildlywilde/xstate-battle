@@ -12,4 +12,4 @@ A simple turn based combat app built to demo state based UI using Xstate and Rea
 - [ ] Child Machine modeling the player
 - [ ] Child Machine modeling the enemy
 - [ ] Add actions beside attack
-- [ ] Try using xstate/test to test the app
+- [ ] Try using xstate/test for testing
