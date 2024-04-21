@@ -19,6 +19,7 @@ export const battleMachine = setup({
   context: ({ input }) => ({
     player: input.player,
     enemy: input.enemy,
+    combatLog: []
   }),
   initial: "start",
   states: {
@@ -36,6 +37,10 @@ export const battleMachine = setup({
               const enemy = event.context.enemy;
               return { ...enemy, health: enemy.health - 10 };
             },
+            combatLog: (event) => [
+              ...event.context.combatLog, 
+              `You hit the ${event.context.enemy.name} for 10 damage`
+            ]
           }),
         },
       },
@@ -60,6 +65,10 @@ export const battleMachine = setup({
               const player = event.context.player;
               return { ...player, health: player.health - 10 };
             },
+            combatLog: (event) => [
+              ...event.context.combatLog, 
+              `The ${event.context.enemy.name} hit you for 10 damage`
+            ]
           }),
         },
       },
@@ -99,7 +108,8 @@ export const battleMachine = setup({
                 name: "Enemy",
                 health: 100
               }
-            }
+            },
+            combatLog: () => []
           })
         },
       },
@@ -120,7 +130,8 @@ export const battleMachine = setup({
                 name: "Enemy",
                 health: 50
               }
-            }
+            },
+            combatLog: () => []
           })
         },
       },

@@ -6,4 +6,5 @@ export interface Character {
 export interface BattleContext {
   player: Character;
   enemy: Character;
+  combatLog: string[]
 }
