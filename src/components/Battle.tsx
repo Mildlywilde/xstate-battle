@@ -1,9 +1,8 @@
-import { useMachine, useActor } from '@xstate/react';
+import { useActor } from '@xstate/react';
 import {battleMachine} from '../xstate/battleMachine';
 import { StatusPanel } from './StatusPanel';
 
 export const Battle = () => {
-  // Use an actor
   const [state, send] = useActor(battleMachine, { 
     input: {
       playerHealth: 100,
