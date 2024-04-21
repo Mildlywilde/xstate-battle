@@ -71,16 +71,12 @@ export const battleMachine = setup({
         enemyTurnInfo: {
             on: {
                 CONFIRM: {
-                    target: "endStep",
+                    target: "enemyEndStep",
                 }
             }
         },
-        endStep: {
+        enemyEndStep: {
             always: [
-                {
-                    target: "playerWin",
-                    guard: "isEnemyDead"
-                },
                 {
                     target: "enemyWin",
                     guard: "isPlayerDead"
