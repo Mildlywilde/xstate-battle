@@ -1,16 +1,5 @@
 import { assign, setup } from "xstate";
-
-export interface Character {
-    name: string
-    health: number
-}
-
-export interface BattleContext {
-    player: Character
-    enemy: Character
-    // playerHealth: number;
-    // enemyHealth: number;
-}
+import { BattleContext } from "../types";
 
 export const battleMachine = setup({
     types: {

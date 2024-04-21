@@ -1,10 +1,10 @@
-import { Character } from "../xstate/battleMachine"
+import { Character } from "../types"
 
 export const StatusPanel = ({character}: {character: Character}) => {
     return (
         <div>
-            Name: {character.name}
-            Health: {character.health}
+            <p>Name: {character.name}</p>
+            <p>Health: {character.health}</p>
         </div>
     )
 }
