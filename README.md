@@ -2,7 +2,11 @@
 
 A simple turn based combat app built to demo state based UI using Xstate and React
 
-## ToDo
+## Running the app
+
+Run `npm i && npm run dev` to start the app locally
+
+## TODO
 
 - [x] State Machine to model the battle states
 - [x] Working frontend using xstate actor to drive state

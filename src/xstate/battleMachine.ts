@@ -7,8 +7,8 @@ export const battleMachine = setup({
     context: {} as BattleContext,
     events: {} as
       | { type: "BEGIN" }
-      | { type: "ATTACK" }
-      | { type: "CONFIRM" }
+      | { type: "ATTACK"; damage: number }
+      | { type: "CONFIRM"; damage: number }
       | { type: "RESET" },
   },
   guards: {
@@ -33,13 +33,13 @@ export const battleMachine = setup({
         ATTACK: {
           target: "playerEndStep",
           actions: assign({
-            enemy: (event) => {
-              const enemy = event.context.enemy;
-              return { ...enemy, health: enemy.health - 10 };
+            enemy: ({event, context}) => {
+              const enemy = context.enemy;
+              return { ...enemy, health: enemy.health - event.damage };
             },
-            combatLog: (event) => [
-              ...event.context.combatLog, 
-              `You hit the ${event.context.enemy.name} for 10 damage`
+            combatLog: ({event, context}) => [
+              ...context.combatLog, 
+              `You hit the ${context.enemy.name} for ${event.damage} damage`
             ]
           }),
         },
@@ -61,13 +61,13 @@ export const battleMachine = setup({
         CONFIRM: {
           target: "enemyTurnInfo",
           actions: assign({
-            player: (event) => {
-              const player = event.context.player;
-              return { ...player, health: player.health - 10 };
+            player: ({event, context}) => {
+              const player = context.player;
+              return { ...player, health: player.health - event.damage };
             },
-            combatLog: (event) => [
-              ...event.context.combatLog, 
-              `The ${event.context.enemy.name} hit you for 10 damage`
+            combatLog: ({event, context}) => [
+              ...context.combatLog, 
+              `The ${context.enemy.name} hit you for ${event.damage} damage`
             ]
           }),
         },

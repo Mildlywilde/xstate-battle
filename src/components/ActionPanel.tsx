@@ -10,10 +10,10 @@ export const ActionPanel = () => {
   return (
     <div>
       {state.matches("playerTurn") && (
-        <button onClick={() => send({ type: "ATTACK" })}>Attack</button>
+        <button onClick={() => send({ type: "ATTACK", damage: Math.floor(Math.random() * 10) })}>Attack</button>
       )}
       {(state.matches("enemyTurnAction") || state.matches("enemyTurnInfo")) && (
-        <button onClick={() => send({ type: "CONFIRM" })}>Confirm</button>
+        <button onClick={() => send({ type: "CONFIRM", damage: Math.floor(Math.random() * 10) })}>Confirm</button>
       )}
     </div>
   );
